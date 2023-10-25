@@ -3,9 +3,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
-import keras.api._v2.keras as keras
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.metrics import mean_squared_error
 from keras.models import Sequential
 from keras.layers import Dense, LSTM
 
@@ -38,7 +36,6 @@ window = 60
 train_x, train_y = create_sequences(train_data, window)
 test_x, test_y = create_sequences(test_data, window)
 
-# Step 3: Building Your Stock Trading Bot
 # Define the LSTM model
 model = Sequential()
 model.add(LSTM(units=50, return_sequences=True, input_shape=(train_x.shape[1], 1)))
@@ -51,11 +48,9 @@ model.compile(optimizer="adam", loss="binary_crossentropy")
 # Train the model
 model.fit(train_x, train_y, epochs=10, batch_size=32)
 
-# Step 4: Evaluating Your Stock Trading Bot
 # Evaluate the model on the test set
 test_loss = model.evaluate(test_x, test_y)
 
-# Step 5: Using Your Stock Trading Bot
 # Make predictions on the test set
 predictions = model.predict(test_x)
 predictions = scaler.inverse_transform(predictions)
