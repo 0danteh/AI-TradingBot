@@ -70,7 +70,7 @@ lstm = Sequential()
 lstm.add(LSTM(50, input_shape=(X_train.shape[1], X_train.shape[2]), activation='relu', return_sequences=True))
 lstm.add(LSTM(50, activation='relu'))
 lstm.add(Dense(1))
-lstm.compile(loss='binary_crossentropy', optimizer='adam')
+lstm.compile(loss='mean_squared_error', optimizer='adam')
 
 arch=lstm.fit(X_train, y_train, epochs=100, batch_size=4, verbose=2, shuffle=False)
 y_pred = lstm.predict(X_test)
