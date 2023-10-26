@@ -12,7 +12,7 @@ ticker_symbol = 'TSLA'
 
 # Set the start and end date for the data
 end_date = datetime.today()
-start_date = end_date - timedelta(365*50)
+start_date = end_date - timedelta(365*100)
 
 # Download the data
 df = yf.download(tickers=ticker_symbol, start=start_date, end=end_date)
