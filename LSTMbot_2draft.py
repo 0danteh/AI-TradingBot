@@ -7,11 +7,9 @@ from keras.layers import Dense
 from keras.layers import LSTM
 from keras.layers import Dropout
 from keras.layers import *
-from keras.callbacks import EarlyStopping
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error
-from sklearn.metrics import mean_absolute_error
-from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_percentage_error
 from sklearn.model_selection import TimeSeriesSplit
 
 # Get the ticker symbol 
@@ -73,5 +71,24 @@ lstm.add(LSTM(50, input_shape=(X_train.shape[1], X_train.shape[2]), activation='
 lstm.add(LSTM(50, activation='relu'))
 lstm.add(Dense(1))
 lstm.compile(loss='binary_crossentropy', optimizer='adam')
-lstm.summary()
 
+arch=lstm.fit(X_train, y_train, epochs=100, batch_size=4, verbose=2, shuffle=False)
+y_pred = lstm.predict(X_test)
+
+rmse = mean_squared_error(y_test, y_pred, squared=False)
+mape = mean_absolute_percentage_error(y_test, y_pred)
+
+print("RMSE: ", rmse)
+print("MAPE: ", mape)
+
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(12, 6))
+plt.plot(X_test_date, y_test, label="Actual", marker='o')
+plt.plot(X_test_date, y_pred, label="Predicted", linestyle='--', marker='o')
+plt.title('Actual vs. Predicted Prices')
+plt.xlabel('Date')
+plt.ylabel('Price')
+plt.legend()
+plt.grid(True)
+plt.show()
