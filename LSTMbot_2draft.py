@@ -46,7 +46,7 @@ def nnLSTM_split_func(data, n_steps):
     return np.array(X), np.array(y)
 
 # Preparing data
-X_1, y_1 = nnLSTM_split_func(df.values, n_steps=2)
+X_1, y_1 = nnLSTM_split_func(df.values, n_steps=10)
 
 # Define the train-test split ratio (80% for training, 20% for testing)
 train_split = 0.8
@@ -80,15 +80,3 @@ mape = mean_absolute_percentage_error(y_test, y_pred)
 
 print("RMSE: ", rmse)
 print("MAPE: ", mape)
-
-import matplotlib.pyplot as plt
-
-plt.figure(figsize=(12, 6))
-plt.plot(X_test_date, y_test, label="Actual", marker='o')
-plt.plot(X_test_date, y_pred, label="Predicted", linestyle='--', marker='o')
-plt.title('Actual vs. Predicted Prices')
-plt.xlabel('Date')
-plt.ylabel('Price')
-plt.legend()
-plt.grid(True)
-plt.show()
