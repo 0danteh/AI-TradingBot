@@ -69,7 +69,9 @@ y_train, y_test = y_1[:split_idx], y_1[split_idx:]
 X_train_date, X_test_date = date_index[:split_idx], date_index[split_idx:]
 
 lstm = Sequential()
-lstm.add(LSTM(32, input_shape=(X_train.shape[1], X_train.shape[2]), activation='relu', return_sequences=True))
+lstm.add(LSTM(50, input_shape=(X_train.shape[1], X_train.shape[2]), activation='relu', return_sequences=True))
+lstm.add(LSTM(50, activation='relu'))
 lstm.add(Dense(1))
-lstm.compile(loss='mean_squared_error', optimizer='adam')
+lstm.compile(loss='binary_crossentropy', optimizer='adam')
 lstm.summary()
+
