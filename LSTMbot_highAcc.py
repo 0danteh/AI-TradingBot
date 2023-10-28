@@ -1,3 +1,4 @@
+# Importing the necessary libraries
 import pandas as pd
 import yfinance as yf
 import matplotlib.pyplot as plt
@@ -12,39 +13,51 @@ from keras import optimizers
 from keras.callbacks import History
 from sklearn.metrics import mean_squared_error
 
+# Setting the params of the stock data intended to download (e.g. TSLA)
 start_date = datetime(2010, 9, 1)
 end_date = datetime(2020, 8, 31)
-ticker_symbol = "TSLA"
+ticker_symbol = "TLSA"
 
-#Download the stock data from Yahoo Finance
+# Download the stock data from Yahoo Finance
 stock_df = yf.download(tickers=ticker_symbol, start=start_date, end=end_date)
 
+# Create a new dataframe with only the adjusted close price column
 new_df = stock_df[['Adj Close']].copy()
 
+# Define a function to prepare the train and test data for the model
 def prepare_train_test_split(new_df, data_set_points, train_split):
+    # Reset the index of the dataframe and drop the first row
     new_df = new_df.reset_index().drop(0)
 
-    #Split the data into train and test sets.
+    # Split the data into train and test sets based on the train_split ratio
     split_index = int(new_df.shape[0] * train_split)
 
     train_data = new_df.iloc[:split_index]
     test_data = new_df.iloc[split_index:].reset_index(drop=True)
 
+    # Calculate the difference between consecutive values of the adjusted close price for both train and test sets
     train_diff = np.diff(train_data['Adj Close'].values)
     test_diff = np.diff(test_data['Adj Close'].values)
 
+    # Create the input features for the model by taking data_set_points number of values from the train_diff array
     X_train = np.array([train_diff[i : i + data_set_points] for i in range(len(train_diff) - data_set_points)])
 
+    # Create the output labels for the model by taking the next value after data_set_points number of values from the train_diff array
     y_train = np.array([train_diff[i + data_set_points] for i in range(len(train_diff) - data_set_points)])
 
+    # Create a validation set from the last 10% of the train_data
     y_valid = np.array([train_data['Adj Close'].tail(len(y_train) // 10)])
 
+    # Reshape the validation set to match the output shape of the model
     y_valid = y_valid.reshape(-1, 1)
 
+    # Create the input features for the test set by taking data_set_points number of values from the test_diff array
     X_test = np.array([test_diff[i : i + data_set_points] for i in range(len(test_diff) - data_set_points)])
 
+    # Create the output labels for the test set by taking the next value after data_set_points number of values from the test_data dataframe
     y_test = np.array([test_data['Adj Close'][i + data_set_points] for i in range(len(test_diff) - data_set_points)])
 
+    # Return the train and test sets as numpy arrays
     return X_train, y_train, X_test, y_test, test_data
 
 def create_lstm_model(X_train, y_train, data_set_points):
