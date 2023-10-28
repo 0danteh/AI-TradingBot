@@ -12,6 +12,15 @@ from keras import optimizers
 from keras.callbacks import History
 from sklearn.metrics import mean_squared_error
 
+start_date = datetime(2010, 9, 1)
+end_date = datetime(2020, 8, 31)
+ticker_symbol = "TSLA"
+
+#Download the stock data from Yahoo Finance
+stock_df = yf.download(tickers=ticker_symbol, start=start_date, end=end_date)
+
+new_df = stock_df[['Adj Close']].copy()
+
 def prepare_train_test_split(new_df, data_set_points, train_split):
     new_df = new_df.reset_index().drop(0)
 
@@ -62,34 +71,41 @@ def create_lstm_model(X_train, y_train, data_set_points):
 
     return model
 
+train_split = 0.7
 
-if __name__ == "__main__":
+data_set_points = 21
 
-    start_date = datetime(2010, 9, 1)
-    end_date = datetime(2020, 8, 31)
-    ticker_symbol = "TSLA"
+#Prepare the train and test data sets
+X_train, y_train, X_test, y_test, test_data = prepare_train_test_split(new_df, data_set_points, train_split)
 
-    #Download the stock data from Yahoo Finance
-    stock_df = yf.download(tickers=ticker_symbol, start=start_date, end=end_date)
+#Create and train the LSTM model
+model = create_lstm_model(X_train, y_train, data_set_points)
 
-    train_split = 0.7
+#Predict the test data using the model
+y_pred = model.predict(X_test)
 
-    data_set_points = 21
+y_pred = y_pred.flatten()
 
-    new_df = stock_df[['Adj Close']].copy()
+#Get the actual prices of the test data
+actual = np.array([test_data['Adj Close'][i + data_set_points] for i in range(len(test_data) - data_set_points)])
 
-    #Prepare the train and test data sets
-    X_train, y_train, X_test, y_test, test_data = prepare_train_test_split(new_df, data_set_points, train_split)
+temp_actual = actual[:-1]
 
-    #Create and train the LSTM model
-    model = create_lstm_model(X_train, y_train, data_set_points)
+#Adding each actual price at time t with the predicted difference to get a predicted price at time t + 1
+new = np.add(temp_actual, y_pred)
 
-    #Predict the test data using the model
-    y_pred = model.predict(X_test)
+plt.gcf().set_size_inches(12, 8, forward=True)
+plt.title('Plot of real price and predicted price against number of days for test set')
+plt.xlabel('Number of days')
+plt.ylabel('Adjusted Close Price($)')
 
-    y_pred = y_pred.flatten()
+plt.plot(actual[1:], label='Actual Price')
+plt.plot(new, label='Predicted Price')
 
-    #Get the actual prices of the test data
-    actual = np.array([test_data['Adj Close'][i + data_set_points] for i in range(len(test_data) - data_set_points)])
+print(mean_squared_error(actual[1:], new, squared = False))
 
-    generate_predicted_result_based_on_previous_actual(actual, y_pred)
+#plotting of model
+plt.legend(['Actual Price', 'Predicted Price'])
+
+
+plt.show()
