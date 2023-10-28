@@ -60,28 +60,49 @@ def prepare_train_test_split(new_df, data_set_points, train_split):
     # Return the train and test sets as numpy arrays
     return X_train, y_train, X_test, y_test, test_data
 
+# Define a function to create and train an LSTM model for the stock price prediction
 def create_lstm_model(X_train, y_train, data_set_points):
-    #Set the random seed for reproducibility
+    # Set the random seed for reproducibility
     tf.random.set_seed(20)
     np.random.seed(10)
 
+    # Define the input layer of the model with the shape of the input features
     lstm_input = Input(shape=(data_set_points, 1), name='lstm_input')
 
+    # Add the first LSTM layer with 21 units and return the full sequence of outputs
     inputs = LSTM(21, name='lstm_0', return_sequences=True)(lstm_input)
 
+    # Add a dropout layer with 0.1 dropout rate to prevent overfitting
     inputs = Dropout(0.1, name='dropout_0')(inputs)
+
+    # Add the second LSTM layer with 32 units and return only the last output
     inputs = LSTM(32, name='lstm_1')(inputs)
-    inputs = Dropout(0.05, name='dropout_1')(inputs) #Dropout layers to prevent overfitting
+
+    # Add another dropout layer with 0.05 dropout rate to prevent overfitting
+    inputs = Dropout(0.05, name='dropout_1')(inputs)
+
+    # Add a dense layer with 32 units and a linear activation function
     inputs = Dense(32, name='dense_0')(inputs)
+
+    # Add another dense layer with 1 unit and a linear activation function
     inputs = Dense(1, name='dense_1')(inputs)
+
+    # Add the output layer with a linear activation function
     output = Activation('linear', name='output')(inputs)
 
+    # Create the model object with the input and output layers
     model = Model(inputs=lstm_input, outputs=output)
+
+    # Define the Adam optimizer with a learning rate of 0.002
     adam = optimizers.Adam(lr=0.002)
 
+    # Compile the model with the optimizer and the mean squared error loss function
     model.compile(optimizer=adam, loss='mse')
+
+    # Fit the model on the train data with a batch size of 15, 25 epochs, and a validation split of 0.1
     model.fit(x=X_train, y=y_train, batch_size=15, epochs=25, shuffle=True, validation_split=0.1)
 
+    # Return the trained model
     return model
 
 train_split = 0.7
