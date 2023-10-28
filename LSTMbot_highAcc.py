@@ -61,3 +61,25 @@ def create_lstm_model(X_train, y_train, data_set_points):
     model.fit(x=X_train, y=y_train, batch_size=15, epochs=25, shuffle=True, validation_split=0.1)
 
     return model
+
+def generate_predicted_result_based_on_previous_actual(actual, y_pred):
+    temp_actual = actual[:-1]
+
+    #Adding each actual price at time t with the predicted difference to get a predicted price at time t + 1
+    new = np.add(temp_actual, y_pred)
+
+    plt.gcf().set_size_inches(12, 8, forward=True)
+    plt.title('Plot of real price and predicted price against number of days for test set')
+    plt.xlabel('Number of days')
+    plt.ylabel('Adjusted Close Price($)')
+
+    plt.plot(actual[1:], label='Actual Price')
+    plt.plot(new, label='Predicted Price')
+
+    print(mean_squared_error(actual[1:], new, squared = False))
+
+    #plotting of model
+    plt.legend(['Actual Price', 'Predicted Price'])
+
+
+    plt.show()
