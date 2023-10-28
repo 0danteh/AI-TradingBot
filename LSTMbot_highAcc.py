@@ -37,3 +37,27 @@ def prepare_train_test_split(new_df, data_set_points, train_split):
     y_test = np.array([test_data['Adj Close'][i + data_set_points] for i in range(len(test_diff) - data_set_points)])
 
     return X_train, y_train, X_test, y_test, test_data
+
+def create_lstm_model(X_train, y_train, data_set_points):
+    #Set the random seed for reproducibility
+    tf.random.set_seed(20)
+    np.random.seed(10)
+
+    lstm_input = Input(shape=(data_set_points, 1), name='lstm_input')
+
+    inputs = LSTM(21, name='lstm_0', return_sequences=True)(lstm_input)
+
+    inputs = Dropout(0.1, name='dropout_0')(inputs)
+    inputs = LSTM(32, name='lstm_1')(inputs)
+    inputs = Dropout(0.05, name='dropout_1')(inputs) #Dropout layers to prevent overfitting
+    inputs = Dense(32, name='dense_0')(inputs)
+    inputs = Dense(1, name='dense_1')(inputs)
+    output = Activation('linear', name='output')(inputs)
+
+    model = Model(inputs=lstm_input, outputs=output)
+    adam = optimizers.Adam(lr=0.002)
+
+    model.compile(optimizer=adam, loss='mse')
+    model.fit(x=X_train, y=y_train, batch_size=15, epochs=25, shuffle=True, validation_split=0.1)
+
+    return model
