@@ -83,3 +83,34 @@ def generate_predicted_result_based_on_previous_actual(actual, y_pred):
 
 
     plt.show()
+
+if __name__ == "__main__":
+
+    start_date = datetime(2010, 9, 1)
+    end_date = datetime(2020, 8, 31)
+    ticker_symbol = "TSLA"
+
+    #Download the stock data from Yahoo Finance
+    stock_df = yf.download(tickers=ticker_symbol, start=start_date, end=end_date)
+
+    train_split = 0.7
+
+    data_set_points = 21
+
+    new_df = stock_df[['Adj Close']].copy()
+
+    #Prepare the train and test data sets
+    X_train, y_train, X_test, y_test, test_data = prepare_train_test_split(new_df, data_set_points, train_split)
+
+    #Create and train the LSTM model
+    model = create_lstm_model(X_train, y_train, data_set_points)
+
+    #Predict the test data using the model
+    y_pred = model.predict(X_test)
+
+    y_pred = y_pred.flatten()
+
+    #Get the actual prices of the test data
+    actual = np.array([test_data['Adj Close'][i + data_set_points] for i in range(len(test_data) - data_set_points)])
+
+    generate_predicted_result_based_on_previous_actual(actual, y_pred)
