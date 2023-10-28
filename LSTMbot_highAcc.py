@@ -105,41 +105,56 @@ def create_lstm_model(X_train, y_train, data_set_points):
     # Return the trained model
     return model
 
+# Define the train and test split ratio
 train_split = 0.7
 
+# Define the number of data points to use as input features for the model
 data_set_points = 21
 
-#Prepare the train and test data sets
+# Prepare the train and test data sets by calling the prepare_train_test_split function
 X_train, y_train, X_test, y_test, test_data = prepare_train_test_split(new_df, data_set_points, train_split)
 
-#Create and train the LSTM model
+# Create and train the LSTM model by calling the create_lstm_model function
 model = create_lstm_model(X_train, y_train, data_set_points)
 
-#Predict the test data using the model
+# Predict the test data using the model
 y_pred = model.predict(X_test)
 
+# Flatten the prediction array to a one-dimensional array
 y_pred = y_pred.flatten()
 
-#Get the actual prices of the test data
+# Get the actual prices of the test data by taking the adjusted close price column from the test_data dataframe
 actual = np.array([test_data['Adj Close'][i + data_set_points] for i in range(len(test_data) - data_set_points)])
 
+# Get the actual prices of the test data except the last one
 temp_actual = actual[:-1]
 
-#Adding each actual price at time t with the predicted difference to get a predicted price at time t + 1
+# Adding each actual price at time t with the predicted difference to get a predicted price at time t + 1
 new = np.add(temp_actual, y_pred)
 
+# Set the size of the plot
 plt.gcf().set_size_inches(12, 8, forward=True)
+
+# Set the title of the plot
 plt.title('Plot of real price and predicted price against number of days for test set')
+
+# Set the x-axis label of the plot
 plt.xlabel('Number of days')
+
+# Set the y-axis label of the plot
 plt.ylabel('Adjusted Close Price($)')
 
+# Plot the actual prices of the test data starting from the second one
 plt.plot(actual[1:], label='Actual Price')
+
+# Plot the predicted prices of the test data
 plt.plot(new, label='Predicted Price')
 
+# Print the root mean squared error between the actual and predicted prices
 print(mean_squared_error(actual[1:], new, squared = False))
 
-#plotting of model
+# Add a legend to the plot
 plt.legend(['Actual Price', 'Predicted Price'])
 
-
+# Show the plot
 plt.show()
