@@ -93,11 +93,11 @@ y_pred = model.predict(X_test)
 # Flatten the prediction array to a one-dimensional array
 y_pred = y_pred.flatten()
 # Get the actual prices of the test data by taking the adjusted close price column from the test_data dataframe
-actual = np.array([test_data['Adj Close'][i + data_set_points] for i in range(len(test_data) - data_set_points)])
+actual1 = np.array([test_data['Adj Close'][i + data_set_points] for i in range(len(test_data) - data_set_points)])
 # Get the actual prices of the test data except the last one
-temp_actual = actual[:-1]
+actual2 = actual1[:-1]
 # Adding each actual price at time t with the predicted difference to get a predicted price at time t + 1
-data = np.add(temp_actual, y_pred)
+data = np.add(actual2, y_pred)
 # Set the size of the plot
 plt.gcf().set_size_inches(12, 8, forward=True)
 # Set the title of the plot
@@ -107,11 +107,11 @@ plt.xlabel('Number of days')
 # Set the y-axis label of the plot
 plt.ylabel('Adjusted Close Price($)')
 # Plot the actual prices of the test data starting from the second one
-plt.plot(actual[1:], label='Actual Price')
+plt.plot(actual1[1:], label='Actual Price')
 # Plot the predicted prices of the test data
 plt.plot(data, label='Predicted Price')
 # Print the root mean squared error between the actual and predicted prices
-print(mean_squared_error(actual[1:], data, squared = False))
+print(mean_squared_error(actual1[1:], data, squared = False))
 # Add a legend to the plot
 plt.legend(['Actual Price', 'Predicted Price'])
 # Show the plot
