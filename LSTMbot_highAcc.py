@@ -15,6 +15,10 @@ if __name__ == "__main__"
     start_date = datetime(2010, 1, 1)
     end_date = datetime(2020, 1, 1)
     ticker_symbol = "TLSA"
+    # Define the train and test split ratio
+    train_split = 0.7
+    # Define the number of data points to use as input features for the model
+    data_set_points = 21
 
 # Download the stock data from Yahoo Finance
 stock_df = yf.download(tickers=ticker_symbol, start=start_date, end=end_date)
@@ -80,10 +84,6 @@ def create_lstm_model(X_train, y_train, data_set_points):
     # Return the trained model
     return model
 
-# Define the train and test split ratio
-train_split = 0.7
-# Define the number of data points to use as input features for the model
-data_set_points = 21
 # Prepare the train and test data sets by calling the prepare_train_test_split function
 X_train, y_train, X_test, y_test, test_data = prepare_train_test_split(new_df, data_set_points, train_split)
 # Create and train the LSTM model by calling the create_lstm_model function
