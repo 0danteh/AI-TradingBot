@@ -10,14 +10,14 @@ from keras.layers import Dense, Dropout, LSTM, Input, Activation
 from keras import optimizers
 from sklearn.metrics import mean_squared_error
 
-# Setting the params of the stock data intended to download (e.g. TSLA)
-start_date = datetime(2010, 9, 1)
-end_date = datetime(2020, 8, 31)
-ticker_symbol = "TLSA"
+if __name__ == "__main__"
+    # Setting the params of the stock data intended to download (e.g. TSLA)
+    start_date = datetime(2010, 1, 1)
+    end_date = datetime(2020, 1, 1)
+    ticker_symbol = "TLSA"
 
 # Download the stock data from Yahoo Finance
 stock_df = yf.download(tickers=ticker_symbol, start=start_date, end=end_date)
-
 # Create a new dataframe with only the adjusted close price column
 new_df = stock_df[['Adj Close']].copy()
 
