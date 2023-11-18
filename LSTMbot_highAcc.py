@@ -1,4 +1,3 @@
-# Importing the necessary libraries
 import yfinance as yf
 import matplotlib.pyplot as plt
 from datetime import datetime
