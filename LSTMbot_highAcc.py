@@ -13,7 +13,6 @@ if __name__ == "__main__":
     start_date = datetime(2010, 1, 1)
     end_date = datetime(2020, 1, 1)
     ticker_symbol = "TLSA"
-    # Define the train and test split ratio
     train_split = 0.7
     # Define the number of data points to use as input features for the model
     data_set_points = 21
