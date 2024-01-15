@@ -62,7 +62,6 @@ def create_lstm_model(X_train, y_train, data_set_points):
     model = Model(inputs=lstm_input, outputs=output)
     adam = optimizers.Adam(lr=0.002)
     model.compile(optimizer=adam, loss='mse')
-    # Fit the model on the train data with a batch size of 15, 25 epochs, and a validation split of 0.1
     model.fit(x=X_train, y=y_train, batch_size=15, epochs=25, shuffle=True, validation_split=0.1)
     # Return the trained model
     return model
