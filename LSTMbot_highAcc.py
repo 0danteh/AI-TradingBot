@@ -16,7 +16,6 @@ if __name__ == "__main__":
     # Define the number of data points to use as input features for the model
     data_set_points = 21
 
-# Download the stock data from Yahoo Finance
 stock_df = yf.download(tickers=ticker_symbol, start=start_date, end=end_date)
 # Create a new dataframe with only the adjusted close price column
 new_df = stock_df[['Adj Close']].copy()
