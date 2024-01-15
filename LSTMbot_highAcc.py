@@ -55,7 +55,6 @@ def create_lstm_model(X_train, y_train, data_set_points):
     inputs = LSTM(21, name='lstm_0', return_sequences=True)(lstm_input)
     inputs = Dropout(0.1, name='dropout_0')(inputs)
     inputs = LSTM(32, name='lstm_1')(inputs)
-    # Add another dropout layer with 0.05 dropout rate to prevent overfitting
     inputs = Dropout(0.05, name='dropout_1')(inputs)
     # Add a dense layer with 32 units and a linear activation function
     inputs = Dense(32, name='dense_0')(inputs)
