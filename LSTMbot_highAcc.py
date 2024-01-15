@@ -57,7 +57,6 @@ def create_lstm_model(X_train, y_train, data_set_points):
     inputs = LSTM(32, name='lstm_1')(inputs)
     inputs = Dropout(0.05, name='dropout_1')(inputs)
     inputs = Dense(32, name='dense_0')(inputs)
-    # Add another dense layer with 1 unit and a linear activation function
     inputs = Dense(1, name='dense_1')(inputs)
     # Add the output layer with a linear activation function
     output = Activation('linear', name='output')(inputs)
