@@ -62,7 +62,7 @@ def create_lstm_model(X_train, y_train, data_set_points):
     model.fit(x=X_train, y=y_train, batch_size=15, epochs=25, shuffle=True, validation_split=0.1)
     return model
 
-# Prepare the train and test data sets by calling the prepare_train_test_split function
+# Prepare the train and test data sets
 X_train, y_train, X_test, y_test, test_data = prepare_train_test_split(new_df, data_set_points, train_split)
 model = create_lstm_model(X_train, y_train, data_set_points)
 y_pred = model.predict(X_test)
