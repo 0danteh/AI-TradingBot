@@ -82,7 +82,6 @@ plt.gcf().set_size_inches(12, 8, forward=True)
 plt.title('Plot of real price and predicted price against number of days for test set')
 plt.xlabel('Number of days')
 plt.ylabel('Adjusted Close Price($)')
-# Plot the actual prices of the test data starting from the second one
 plt.plot(actual1[1:], label='Actual Price')
 plt.plot(data, label='Predicted Price')
 print(mean_squared_error(actual1[1:], data, squared = False))
