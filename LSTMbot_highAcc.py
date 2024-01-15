@@ -24,7 +24,6 @@ def prepare_train_test_split(new_df, data_set_points, train_split):
     # Reset the index of the dataframe and drop the first row
     new_df.reset_index(inplace=True)
     new_df.drop(0, inplace=True)
-    # Split the data into train and test sets based on the train_split ratio
     split_index = int(len(new_df) * train_split)
     train_data = new_df[:split_index]
     test_data = new_df[split_index:].reset_index(drop=True)
@@ -46,7 +45,6 @@ def prepare_train_test_split(new_df, data_set_points, train_split):
     # Return the train and test sets as numpy arrays
     return X_train, y_train, X_test, y_test, test_data
 
-# Define a function to create and train an LSTM model for the stock price prediction
 def create_lstm_model(X_train, y_train, data_set_points):
     # Set the random seed for reproducibility
     tf.random.set_seed(20)
