@@ -91,7 +91,6 @@ plt.plot(data, label='Predicted Price')
 # Print the root mean squared error between the actual and predicted prices
 print(mean_squared_error(actual1[1:], data, squared = False))
 plt.legend(['Actual Price', 'Predicted Price'])
-# Show the plot
 plt.show()
 
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
