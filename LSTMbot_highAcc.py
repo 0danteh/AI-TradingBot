@@ -70,7 +70,6 @@ model = create_lstm_model(X_train, y_train, data_set_points)
 y_pred = model.predict(X_test)
 # Flatten the prediction array to a one-dimensional array
 y_pred = y_pred.flatten()
-# Get the actual prices of the test data by taking the adjusted close price column from the test_data dataframe
 actual1 = np.array([test_data['Adj Close'][i + data_set_points] for i in range(len(test_data) - data_set_points)])
 actual2 = actual1[:-1]
 data = np.add(actual2, y_pred)
