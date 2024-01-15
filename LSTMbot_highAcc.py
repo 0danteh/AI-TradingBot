@@ -53,9 +53,7 @@ def create_lstm_model(X_train, y_train, data_set_points):
     lstm_input = Input(shape=(data_set_points, 1), name='lstm_input')
     # Add the first LSTM layer with 21 units and return the full sequence of outputs
     inputs = LSTM(21, name='lstm_0', return_sequences=True)(lstm_input)
-    # Add a dropout layer with 0.1 dropout rate to prevent overfitting
     inputs = Dropout(0.1, name='dropout_0')(inputs)
-    # Add the second LSTM layer with 32 units and return only the last output
     inputs = LSTM(32, name='lstm_1')(inputs)
     # Add another dropout layer with 0.05 dropout rate to prevent overfitting
     inputs = Dropout(0.05, name='dropout_1')(inputs)
