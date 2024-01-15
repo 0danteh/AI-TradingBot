@@ -59,7 +59,6 @@ def create_lstm_model(X_train, y_train, data_set_points):
     inputs = Dense(32, name='dense_0')(inputs)
     inputs = Dense(1, name='dense_1')(inputs)
     output = Activation('linear', name='output')(inputs)
-    # Create the model object with the input and output layers
     model = Model(inputs=lstm_input, outputs=output)
     # Define the Adam optimizer with a learning rate of 0.002
     adam = optimizers.Adam(lr=0.002)
