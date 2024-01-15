@@ -86,7 +86,6 @@ plt.ylabel('Adjusted Close Price($)')
 plt.plot(actual1[1:], label='Actual Price')
 # Plot the predicted prices of the test data
 plt.plot(data, label='Predicted Price')
-# Print the root mean squared error between the actual and predicted prices
 print(mean_squared_error(actual1[1:], data, squared = False))
 plt.legend(['Actual Price', 'Predicted Price'])
 plt.show()
