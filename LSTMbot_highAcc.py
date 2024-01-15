@@ -68,7 +68,6 @@ X_train, y_train, X_test, y_test, test_data = prepare_train_test_split(new_df, d
 model = create_lstm_model(X_train, y_train, data_set_points)
 # Predict the test data using the model
 y_pred = model.predict(X_test)
-# Flatten the prediction array to a one-dimensional array
 y_pred = y_pred.flatten()
 actual1 = np.array([test_data['Adj Close'][i + data_set_points] for i in range(len(test_data) - data_set_points)])
 actual2 = actual1[:-1]
