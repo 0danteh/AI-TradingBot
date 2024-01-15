@@ -80,7 +80,6 @@ data = np.add(actual2, y_pred)
 plt.gcf().set_size_inches(12, 8, forward=True)
 # Set the title of the plot
 plt.title('Plot of real price and predicted price against number of days for test set')
-# Set the x-axis label of the plot
 plt.xlabel('Number of days')
 plt.ylabel('Adjusted Close Price($)')
 # Plot the actual prices of the test data starting from the second one
