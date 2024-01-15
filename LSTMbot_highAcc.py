@@ -63,7 +63,6 @@ def create_lstm_model(X_train, y_train, data_set_points):
     adam = optimizers.Adam(lr=0.002)
     model.compile(optimizer=adam, loss='mse')
     model.fit(x=X_train, y=y_train, batch_size=15, epochs=25, shuffle=True, validation_split=0.1)
-    # Return the trained model
     return model
 
 # Prepare the train and test data sets by calling the prepare_train_test_split function
