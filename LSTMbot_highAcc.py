@@ -74,7 +74,6 @@ y_pred = y_pred.flatten()
 actual1 = np.array([test_data['Adj Close'][i + data_set_points] for i in range(len(test_data) - data_set_points)])
 # Get the actual prices of the test data except the last one
 actual2 = actual1[:-1]
-# Adding each actual price at time t with the predicted difference to get a predicted price at time t + 1
 data = np.add(actual2, y_pred)
 plt.gcf().set_size_inches(12, 8, forward=True)
 plt.title('Plot of real price and predicted price against number of days for test set')
