@@ -17,7 +17,6 @@ if __name__ == "__main__":
     data_set_points = 21
 
 stock_df = yf.download(tickers=ticker_symbol, start=start_date, end=end_date)
-# Create a new dataframe with only the adjusted close price column
 new_df = stock_df[['Adj Close']].copy()
 
 # Define a function to prepare the train and test data for the model
