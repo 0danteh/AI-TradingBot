@@ -66,7 +66,6 @@ def create_lstm_model(X_train, y_train, data_set_points):
 X_train, y_train, X_test, y_test, test_data = prepare_train_test_split(new_df, data_set_points, train_split)
 # Create and train the LSTM model by calling the create_lstm_model function
 model = create_lstm_model(X_train, y_train, data_set_points)
-# Predict the test data using the model
 y_pred = model.predict(X_test)
 y_pred = y_pred.flatten()
 actual1 = np.array([test_data['Adj Close'][i + data_set_points] for i in range(len(test_data) - data_set_points)])
