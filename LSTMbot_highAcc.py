@@ -76,7 +76,6 @@ actual1 = np.array([test_data['Adj Close'][i + data_set_points] for i in range(l
 actual2 = actual1[:-1]
 # Adding each actual price at time t with the predicted difference to get a predicted price at time t + 1
 data = np.add(actual2, y_pred)
-# Set the size of the plot
 plt.gcf().set_size_inches(12, 8, forward=True)
 plt.title('Plot of real price and predicted price against number of days for test set')
 plt.xlabel('Number of days')
