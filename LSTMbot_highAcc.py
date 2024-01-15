@@ -46,7 +46,6 @@ def prepare_train_test_split(new_df, data_set_points, train_split):
     return X_train, y_train, X_test, y_test, test_data
 
 def create_lstm_model(X_train, y_train, data_set_points):
-    # Set the random seed for reproducibility
     tf.random.set_seed(20)
     np.random.seed(10)
     # Define the input layer of the model with the shape of the input features
