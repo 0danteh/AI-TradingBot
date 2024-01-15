@@ -9,7 +9,6 @@ from keras import optimizers
 from sklearn.metrics import mean_squared_error
 
 if __name__ == "__main__":
-    # Setting the params of the stock data intended to download (e.g. TSLA)
     start_date = datetime(2010, 1, 1)
     end_date = datetime(2020, 1, 1)
     ticker_symbol = "TLSA"
