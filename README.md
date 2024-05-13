@@ -1,4 +1,3 @@
-# nnTradingBot
 ## Introduction
 
 This repo contains the python files for a fully-python equipped AI stocks price forecast. The algorithm utilised for such prediction is LSTM (Long-Short Term Memory - if you want to learn more, please refer to the appropriate section in my profile): a special type of recurrent neural network (RNN) that can process sequential data by looping over time steps and updating their internal state.
